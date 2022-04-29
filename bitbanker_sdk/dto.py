@@ -1,3 +1,4 @@
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
@@ -24,7 +25,7 @@ class InvoiceData(StrictBaseDTO):
         default=Currency.RUB,
         description='Валюта счета. Пока только рубли ("RUB").',
     )
-    amount: connumber(ge=0.00000001) = Field(
+    amount: connumber(ge=0.00000001) = Field(  # type: ignore
         description='Размер платежа в валюте, указанной в поле "currency".',
     )
     description: str = Field(
@@ -37,7 +38,7 @@ class InvoiceData(StrictBaseDTO):
         default=False,
         description='Ковертировать поступившие средства в рубли или оставить в крипте',
     )
-    data: Optional[dict] = Field(
+    data: Optional[Dict[str, Any]] = Field(
         default=None,
         description='Произвольные данные. Будут отправлены в запросе в webhook-е (если он настроен).',
     )
@@ -55,12 +56,10 @@ class InvoiceData(StrictBaseDTO):
                 'data': {
                     'id': 1234,
                     'item': 'notebook',
-                }
+                },
             }
         }
-        dict_encoders = {
-            Number: lambda v: float(v)
-        }
+        dict_encoders = {Number: lambda v: float(v)}
 
 
 class CreateInvoiceResponse(StrictBaseDTO):

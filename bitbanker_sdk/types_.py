@@ -16,7 +16,7 @@ from pydantic.validators import number_size_validator
 
 
 DEFAULT_PRECISION = 12
-DEFAULT_QUANTIZE_EXP = decimal.Decimal(str(10 ** -DEFAULT_PRECISION))
+DEFAULT_QUANTIZE_EXP = decimal.Decimal(str(10**-DEFAULT_PRECISION))
 
 
 class Context(pydantic.BaseModel):
@@ -42,7 +42,7 @@ class PydanticMixin:
     """
 
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
@@ -118,14 +118,14 @@ class Number(PydanticMixin, decimal.Decimal):
             raise Exception('Not available round for Number without context')
 
         prec = DEFAULT_PRECISION
-        exp = decimal.Decimal(str(10 ** -prec))
+        exp = decimal.Decimal(str(10**-prec))
         value = self.quantize(exp, rounding=decimal.ROUND_DOWN)
         value = str(value)
         value = decimal.Decimal.__new__(Number, value)
         return value
 
     def round(self, prec=DEFAULT_PRECISION, rounding=ROUND_DOWN):
-        exp = decimal.Decimal(str(10 ** -prec))
+        exp = decimal.Decimal(str(10**-prec))
         value = self.quantize(exp, rounding=rounding)
         value = str(value)
         value = decimal.Decimal.__new__(Number, value)
@@ -145,6 +145,7 @@ class ConstrainedNumber(Number, metaclass=ConstrainedNumberMeta):
     """
     Поддержка валидаций pydantic
     """
+
     gt: OptionalIntFloatDecimal = None
     ge: OptionalIntFloatDecimal = None
     lt: OptionalIntFloatDecimal = None
@@ -161,6 +162,7 @@ class ConstrainedNumber(Number, metaclass=ConstrainedNumberMeta):
     def __get_validators__(cls):
         def number_validator(v: Any) -> Number:
             return Number(decimal_validator(v))
+
         yield number_validator
         yield number_size_validator
         yield number_multiple_validator
