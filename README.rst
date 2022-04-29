@@ -31,11 +31,36 @@ The project is available on PyPI. Simply run::
 
 Usage
 -----
-::
+With sync python application::
 
-    from aiocircuitbreaker import circuit
+    from bitbanker_sdk import BitbankerClient
+    from bitbanker_sdk import InvoiceData
+    from bitbanker_sdk import Currency
 
-    @circuit
-    async def external_call():
-        ...
+    client = BitbankerClient(api_key="<your bitbanker api key>")
+    invoice_data = InvoiceData(
+            amount=1000,
+            payment_currencies=[Currency.ETH, Currency.BTC],
+            description='invoice description',
+            header='invoice header'
+        )
 
+    response = client.create_invoice(invoice_data=invoice)
+    print(response.link)
+
+With async python application::
+
+    from bitbanker_sdk import AsyncBitbankerClient
+    from bitbanker_sdk import InvoiceData
+    from bitbanker_sdk import Currency
+
+    client = AsyncBitbankerClient(api_key="<your bitbanker api key>")
+    invoice_data = InvoiceData(
+            amount=1000,
+            payment_currencies=[Currency.ETH, Currency.BTC],
+            description='invoice description',
+            header='invoice header'
+        )
+
+    response = await client.create_invoice(invoice_data=invoice)
+    print(response.link)
