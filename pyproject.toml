@@ -1,0 +1,41 @@
+[tool.black]
+line-length = 120
+skip-string-normalization = '1'
+exclude = '''
+/(
+  | env
+  | proto
+  |local_settings.py
+)/
+'''
+
+[tool.poetry]
+name = "bitbanker-sdk"
+version = "0.0.1"
+description = ""
+authors = ["Evgeny Solomatin <solgenya@gmail.com>"]
+repository = "https://github.com/melnikovsa/python-bitbanker-sdk"
+# readme = 'README.rst'
+
+[tool.poetry.dependencies]
+python = "^3.8.0"
+httpx = "^0.22.0"
+pydantic = "^1.9.0"
+
+[tool.poetry.dev-dependencies]
+autoflake = "1.*"
+black = "^21.12b0"
+flake8 = "3.*"
+isort = "4.*"
+mypy = "0.790"
+pip = "^21.3.1"
+pytest = "6.*"
+pytest-asyncio = "0.*"
+pytest-cov = "2.*"
+poetry = "^1.1.12"
+pre-commit = "^2.13.0"
+types-pytz = "^2021.3.3"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
