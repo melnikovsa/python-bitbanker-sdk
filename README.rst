@@ -13,6 +13,7 @@ bitbanker-sdk
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/python/black
 
+
 This is an sync/async Python `Bitbanker`__ API client.
 
 .. _Bitbanker: https://bitbanker.org/
