@@ -7,8 +7,11 @@ bitbanker-sdk
 .. image:: https://img.shields.io/pypi/pyversions/bitbanker-sdk.svg
     :target: https://pypi.python.org/pypi/bitbanker-sdk
 
-.. image:: https://github.com/GenyaSol/aiocircuitbreaker/actions/workflows/run-test.yml/badge.svg
+.. image:: https://github.com/melnikovsa/python-bitbanker-sdk/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/melnikovsa/python-bitbanker-sdk/actions/workflows/tests.yml
+
+.. image:: https://github.com/melnikovsa/python-bitbanker-sdk/actions/workflows/pypi.yml/badge.svg
+    :target: https://github.com/melnikovsa/python-bitbanker-sdk/actions/workflows/pypi.yml
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/python/black
@@ -45,7 +48,7 @@ With sync python application::
             header='invoice header'
         )
 
-    response = client.create_invoice(invoice_data=invoice)
+    response = client.create_invoice(invoice_data=invoice_data)
     print(response.link)
 
 With async python application::
@@ -62,5 +65,5 @@ With async python application::
             header='invoice header'
         )
 
-    response = await client.create_invoice(invoice_data=invoice)
+    response = await client.create_invoice(invoice_data=invoice_data)
     print(response.link)

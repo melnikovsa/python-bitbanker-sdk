@@ -40,10 +40,3 @@ coverage-report: test-coverage
 
 test-with-coverage-xml:
 	pytest --cov=./bitbanker-sdk --cov-report=xml
-
-
-# ================================================================================
-# PYPI
-# ================================================================================
-build-package:
-	poetry build
