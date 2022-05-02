@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Callable
+from typing import Coroutine
 from typing import Dict
 from typing import Optional
 
@@ -17,5 +18,15 @@ class HttpResponseMock:
 def exception(exception: Exception) -> Callable[[], None]:
     def wrapper() -> None:
         raise exception
+
+    return wrapper
+
+
+def async_mock(return_value: Any) -> Callable[[], Coroutine[Any, None, None]]:
+    async def wrapper() -> Any:
+        if isinstance(return_value, Exception):
+            raise return_value
+
+        return return_value
 
     return wrapper
