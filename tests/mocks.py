@@ -1,6 +1,6 @@
+import asyncio
 from typing import Any
 from typing import Callable
-from typing import Coroutine
 from typing import Dict
 from typing import Optional
 
@@ -15,18 +15,18 @@ class HttpResponseMock:
         return self._json
 
 
-def exception(exception: Exception) -> Callable[[], None]:
-    def wrapper() -> None:
-        raise exception
+class AsyncMock:
+    def __new__(  # type: ignore
+        cls, return_value: Optional[Any] = None, side_effect: Optional[Exception] = None
+    ) -> Callable[[Any, Any], None]:
+        f = lambda *args, **kwargs: None
+        if return_value:
 
-    return wrapper
+            f = lambda *args, **kwargs: return_value
 
+        elif side_effect:
 
-def async_mock(return_value: Any) -> Callable[[], Coroutine[Any, None, None]]:
-    async def wrapper() -> Any:
-        if isinstance(return_value, Exception):
-            raise return_value
+            def f(*args: Any, **kwargs: Dict[str, Any]) -> None:
+                raise side_effect  # type: ignore
 
-        return return_value
-
-    return wrapper
+        return asyncio.coroutine(f)
