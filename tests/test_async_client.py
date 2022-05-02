@@ -1,5 +1,5 @@
 from typing import Any
-from unittest.mock import AsyncMock
+from unittest.mock import Mock
 
 import pytest
 
@@ -10,25 +10,24 @@ from bitbanker_sdk import CreateInvoiceResponse
 from bitbanker_sdk import Currency
 from bitbanker_sdk import InvoiceData
 from tests.mocks import HttpResponseMock
+from tests.mocks import exception
 
 
 @pytest.mark.asyncio
 async def test_create_invoice_success(mocker: Any) -> None:
-    mock = AsyncMock(
-        return_value=HttpResponseMock(
-            status_code=200,
-            json={
-                'result': 'success',
-                'id': 'dfj5kpos6uacm',
-                'link': 'https://app.dev.bitbanker.org/external/invoice/dfj5kpos6uacm',
-                'addresses': {
-                    'USDT': '0x36928500Bc1dCd7af6a2B4008875CC336b927D57',
-                    'BTC': '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2',
-                },
+    mock = HttpResponseMock(
+        status_code=200,
+        json={
+            'result': 'success',
+            'id': 'dfj5kpos6uacm',
+            'link': 'https://app.dev.bitbanker.org/external/invoice/dfj5kpos6uacm',
+            'addresses': {
+                'USDT': '0x36928500Bc1dCd7af6a2B4008875CC336b927D57',
+                'BTC': '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2',
             },
-        )
+        },
     )
-    mocker.patch('httpx.AsyncClient.post', mock)
+    mocker.patch('httpx.AsyncClient.post', return_value=mock)
 
     client = AsyncBitbankerClient(api_key='key')
     data = InvoiceData(
@@ -48,8 +47,8 @@ async def test_create_invoice_success(mocker: Any) -> None:
 
 @pytest.mark.asyncio
 async def test_create_invoice_response_error(mocker: Any) -> None:
-    mock = AsyncMock(return_value=HttpResponseMock(status_code=401, text='401: Unauthorized'))
-    mocker.patch('httpx.AsyncClient.post', mock)
+    mock = HttpResponseMock(status_code=401, text='401: Unauthorized')
+    mocker.patch('httpx.AsyncClient.post', return_value=mock)
 
     client = AsyncBitbankerClient(api_key='key')
     data = InvoiceData(
@@ -66,7 +65,7 @@ async def test_create_invoice_response_error(mocker: Any) -> None:
 
 @pytest.mark.asyncio
 async def test_create_invoice_connection_error(mocker: Any) -> None:
-    mock = AsyncMock(side_effect=RuntimeError())
+    mock = Mock(side_effect=exception(RuntimeError()))
     mocker.patch('httpx.AsyncClient.post', mock)
 
     client = AsyncBitbankerClient(api_key='key')
