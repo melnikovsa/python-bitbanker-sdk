@@ -95,20 +95,20 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-        - name: Install dependencies
-          if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-          run: poetry install --no-interaction --no-root
-        - name: Install library
-          run: poetry install --no-interaction
-        - name: Run tests
-          run: |
-            source .venv/bin/activate
-            make test-with-coverage-xml
-        - name: Upload coverage to Codecov
-          uses: codecov/codecov-action@v2
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            fail_ci_if_error: true
-            files: ./coverage.xml
-            flags: unittests
-            verbose: true
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+      - name: Install library
+        run: poetry install --no-interaction
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          make test-with-coverage-xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: ./coverage.xml
+          flags: unittests
+          verbose: true
