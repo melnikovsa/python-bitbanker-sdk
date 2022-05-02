@@ -7,6 +7,9 @@ bitbanker-sdk
 .. image:: https://img.shields.io/pypi/pyversions/bitbanker-sdk.svg
     :target: https://pypi.python.org/pypi/bitbanker-sdk
 
+.. image:: https://codecov.io/gh/melnikovsa/python-bitbanker-sdk/branch/main/graph/badge.svg
+    :target: https://app.codecov.io/gh/melnikovsa/python-bitbanker-sdk
+
 .. image:: https://github.com/melnikovsa/python-bitbanker-sdk/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/melnikovsa/python-bitbanker-sdk/actions/workflows/tests.yml
 
