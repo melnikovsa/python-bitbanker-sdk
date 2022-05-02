@@ -39,4 +39,4 @@ coverage-report: test-coverage
 	coverage report
 
 test-with-coverage-xml:
-	pytest --cov=./python-bitbanker-sdk --cov-report=xml
+	pytest --cov=./bitbanker_sdk --cov-report=xml
