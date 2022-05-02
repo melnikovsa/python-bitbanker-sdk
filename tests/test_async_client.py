@@ -1,5 +1,10 @@
 from typing import Any
-from unittest.mock import AsyncMock
+
+
+try:
+    from unittest.mock import AsyncMock
+except ImportError:
+    from tests.mocks import AsyncMock  # type: ignore
 
 import pytest
 

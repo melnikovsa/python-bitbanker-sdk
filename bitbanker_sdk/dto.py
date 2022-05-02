@@ -1,15 +1,13 @@
 from typing import Any
 from typing import Dict
 from typing import List
-from typing import Literal
 from typing import Optional
+from typing import Union
 
 from pydantic import BaseModel
 from pydantic import Field
 
 from bitbanker_sdk.types_ import Currency
-from bitbanker_sdk.types_ import Number
-from bitbanker_sdk.types_ import connumber
 
 
 class StrictBaseDTO(BaseModel):
@@ -25,7 +23,7 @@ class InvoiceData(StrictBaseDTO):
         default=Currency.RUB,
         description='Валюта счета. Пока только рубли ("RUB").',
     )
-    amount: connumber(ge=0.00000001) = Field(  # type: ignore
+    amount: Union[int, float] = Field(
         description='Размер платежа в валюте, указанной в поле "currency".',
     )
     description: str = Field(
@@ -59,11 +57,10 @@ class InvoiceData(StrictBaseDTO):
                 },
             }
         }
-        dict_encoders = {Number: lambda v: float(v)}
 
 
 class CreateInvoiceResponse(StrictBaseDTO):
-    result: Literal['success']
+    result: str
     id: str
     link: str
     addresses: Dict[str, str]
