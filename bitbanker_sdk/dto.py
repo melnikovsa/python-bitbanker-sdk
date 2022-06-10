@@ -17,11 +17,11 @@ class StrictBaseDTO(BaseModel):
 
 class InvoiceData(StrictBaseDTO):
     payment_currencies: List[Currency] = Field(
-        description='Криптовалюты, в которых возможен прием платежей. Возможные значения: "BTC", "ETH"',
+        description='Криптовалюты, в которых возможен прием платежей. Возможные значения: "BTC", "ETH", "USDT"',
     )
     currency: Currency = Field(
         default=Currency.RUB,
-        description='Валюта счета. Пока только рубли ("RUB").',
+        description='Валюта счета. Возможные значения: "RUB", "USDT"',
     )
     amount: Union[int, float] = Field(
         description='Размер платежа в валюте, указанной в поле "currency".',
