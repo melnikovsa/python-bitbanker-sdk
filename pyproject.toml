@@ -11,7 +11,7 @@ exclude = '''
 
 [tool.poetry]
 name = "bitbanker-sdk"
-version = "0.0.1"
+version = "0.0.2"
 description = "Bitbanker.org API client"
 authors = ["Evgeny Solomatin <solgenya@gmail.com>", "Artur Smolin <artursmolin@outlook.com>", "Stanislav Melnikov <king_and_joker@list.ru>"]
 repository = "https://github.com/melnikovsa/python-bitbanker-sdk"
